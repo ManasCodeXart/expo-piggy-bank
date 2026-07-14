@@ -2,7 +2,8 @@
 
 A gravity-driven savings drop — animated coins fall from your quick-amount pad into a reactive piggy bank, synced to your save call and capped by a spring-loaded success sheet. Built for fintech apps.
 
-<img width="1280" height="720" alt="gravity-savings" src="ADD_YOUR_GIF_URL_HERE" />
+
+<img width="1280" height="720" alt="Piggy-Bank" src="https://github.com/user-attachments/assets/b3265e25-a6c0-4e58-8772-3bac1656a380" />
 
 ---
 
@@ -14,7 +15,7 @@ A gravity-driven savings drop — animated coins fall from your quick-amount pad
 - 🔒 **Race-safe save/animation sync** — success only shows once *both* the coin-fall animation and your `onSave` promise have resolved, whichever finishes last. A 3s grace timer catches a slow `onSave` after the animation ends, without ever double-firing `onDone` or `onError`
 - 🔢 **Custom keypad + quick-amount pills**, both driving a shared-value-backed `AnimatedCounter` that only re-renders on visible digit changes
 - 🧠 **TypeScript-first** — discriminated `CoinDropState` union (`'idle' | 'dropping' | 'success' | 'error'`), fully typed props
-- 🪶 **No gesture-handler dependency** — unlike the rest of the series, this one only needs Reanimated + Haptics
+
 
 ---
 
@@ -81,7 +82,11 @@ If `onSave` is still pending 3 seconds after the last coin lands, the component 
 
 ## Preview
 
-ADD_YOUR_PREVIEW_VIDEO_LINK_HERE
+
+
+
+https://github.com/user-attachments/assets/db46eaea-d9a8-441d-a46a-bfe87cfc0928
+
 
 ---
 
