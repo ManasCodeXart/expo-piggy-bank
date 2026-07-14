@@ -1,6 +1,6 @@
 # expo-piggy-bank
 
-A gravity-driven savings drop — animated coins fall from your quick-amount pad into a reactive piggy bank, synced to your save call and capped by a spring-loaded success sheet. Built for fintech apps.
+A gravity-driven savings drop — animated coins fall from your quick-amount pad into a reactive piggy bank.
 
 
 <img width="1280" height="720" alt="km_20260710-2_1080p_30f_20260714_063804-ezgif com-video-to-gif-converter" src="https://github.com/user-attachments/assets/02ba2896-b4c5-4906-b097-24d806ec6893" />
