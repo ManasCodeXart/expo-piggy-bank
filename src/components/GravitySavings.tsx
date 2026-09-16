@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { NumericText } from 'react-native-numeric-text'
 import Animated, {
   Easing,
   FadeIn,
@@ -10,7 +11,6 @@ import Animated, {
   withRepeat,
   withTiming,
 } from 'react-native-reanimated'
-import { NumericText } from 'react-native-numeric-text'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { verticalScale } from '../constants/scaling'
 import {
@@ -414,7 +414,8 @@ const GravitySavings = ({
 export default GravitySavings
 
 
-const styles = StyleSheet.create({
+
+  const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#000000',
@@ -432,7 +433,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     gap: verticalScale(10),
-    marginTop: verticalScale(4),
+    marginTop: verticalScale(2),
   },
   avatar: {
     width: AVATAR_SIZE,
@@ -448,6 +449,15 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     letterSpacing: 0.2,
   },
+  inlineAmountRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  savingsPrefix: {
+    color: '#FFFFFF',
+    fontSize: verticalScale(15),
+    fontWeight: '400',
+  },
   savingsAmount: {
     color: '#FFFFFF',
     fontSize: verticalScale(15),
@@ -458,10 +468,17 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     marginTop: verticalScale(10),
   },
+  dollarSign: {
+    color: '#FFFFFF',
+    fontSize: verticalScale(40),
+    fontWeight: '500',
+    lineHeight: verticalScale(58),
+    marginBottom: verticalScale(4),
+  },
   amountText: {
     color: '#FFFFFF',
-    fontSize: verticalScale(64),
-    fontWeight: '500',
+    fontSize: verticalScale(50),
+    fontWeight: '600',
     lineHeight: verticalScale(70),
     letterSpacing: -1,
   },
