@@ -36,7 +36,8 @@ export type GravitySavingsProps = Readonly<{
   currentSavings: number
   userName: string
   userAvatar?: ImageSourcePropType
-  currencySymbol?: string
+  currency?: string
+  locale?: string
   quickAmounts?: readonly QuickAmountPill[]
   onSave: (amount: number) => Promise<void>
   onDone?: () => void
@@ -61,21 +62,12 @@ export type SpawnedCoin = Readonly<{
 export type SuccessSheetProps = Readonly<{
   visible: boolean
   amount: number
-  currencySymbol: string
+  currency: string
+  locale: string
   userName: string
   userAvatar?: ImageSourcePropType
   onDone: () => void
   onReturnHome?: () => void
-}>
-
-export type AnimatedCounterProps = Readonly<{
-  value: number
-  prefix?: string
-  suffix?: string
-  duration?: number
-  delay?: number
-  decimals?: number
-  style?: StyleProp<TextStyle>
 }>
 
 /** Props for the Keypad component. */

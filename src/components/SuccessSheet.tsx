@@ -16,6 +16,7 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated'
+import { NumericText } from 'react-native-numeric-text'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { verticalScale } from '../constants/scaling'
 import type { SuccessSheetProps } from '../constants/types'
@@ -34,7 +35,8 @@ const SHEET_SPRING_CONFIG = { damping: 24, stiffness: 160, mass: 0.9 }
 const SuccessSheet = memo(function SuccessSheet({
   visible,
   amount,
-  currencySymbol,
+  currency,
+  locale,
   userName,
   userAvatar,
   onDone,
@@ -101,10 +103,14 @@ const SuccessSheet = memo(function SuccessSheet({
 
         <Text style={styles.userName}>{userName}</Text>
 
-        <View style={styles.amountRow}>
-          <Text style={styles.currencySymbol}>{currencySymbol}</Text>
-          <Text style={styles.amountText}>{amount}</Text>
-        </View>
+        <NumericText
+          value={amount}
+          currency={currency}
+          locale={locale}
+          minimumFractionDigits={0}
+          maximumFractionDigits={2}
+          style={styles.amountText}
+        />
 
         <Text style={styles.subtitle}>Successfully added in your saving account</Text>
 
@@ -175,24 +181,13 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     marginTop: verticalScale(4),
   },
-  amountRow: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    marginTop: verticalScale(2),
-  },
-  currencySymbol: {
-    color: '#FFFFFF',
-    fontSize: verticalScale(28),
-    fontWeight: '600',
-    lineHeight: verticalScale(48),
-    marginBottom: verticalScale(2),
-  },
   amountText: {
     color: '#FFFFFF',
     fontSize: verticalScale(48),
     fontWeight: '600',
     lineHeight: verticalScale(52),
     letterSpacing: -1,
+    marginTop: verticalScale(2),
   },
   subtitle: {
     color: '#666666',

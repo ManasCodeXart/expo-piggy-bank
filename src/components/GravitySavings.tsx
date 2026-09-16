@@ -10,6 +10,7 @@ import Animated, {
   withRepeat,
   withTiming,
 } from 'react-native-reanimated'
+import { NumericText } from 'react-native-numeric-text'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { verticalScale } from '../constants/scaling'
 import {
@@ -27,7 +28,6 @@ import type {
   PiggyBankRef,
   SpawnedCoin,
 } from '../constants/types'
-import AnimatedCounter from './AnimatedCounter'
 import Coin from './Coin'
 import Keypad from './Keypad'
 import PiggyBank from './PiggyBank'
@@ -107,7 +107,8 @@ const GravitySavings = ({
   currentSavings,
   userName,
   userAvatar,
-  currencySymbol = '$',
+  currency = 'USD',
+  locale = 'en-US',
   quickAmounts = DEFAULT_QUICK_AMOUNTS,
   hapticsEnabled = true,
   onSave,
@@ -314,22 +315,26 @@ const GravitySavings = ({
 
         <View style={styles.savingsTextGroup}>
           <Text style={styles.savingsLabel}>Current Savings</Text>
-          <View style={styles.inlineAmountRow}>
-            <Text style={styles.savingsPrefix}>{currencySymbol}</Text>
-            <AnimatedCounter
-              value={currentSavings}
-              duration={SAVINGS_COUNTER_DURATION}
-              style={styles.savingsAmount}
-            />
-          </View>
+          <NumericText
+            value={currentSavings}
+            currency={currency}
+            locale={locale}
+            animationDuration={SAVINGS_COUNTER_DURATION}
+            minimumFractionDigits={0}
+            maximumFractionDigits={2}
+            style={styles.savingsAmount}
+          />
         </View>
       </View>
 
       <View style={styles.amountRow}>
-        <Text style={styles.dollarSign}>{currencySymbol}</Text>
-        <AnimatedCounter
+        <NumericText
           value={parseFloat(amount) || 0}
-          duration={AMOUNT_COUNTER_DURATION}
+          currency={currency}
+          locale={locale}
+          animationDuration={AMOUNT_COUNTER_DURATION}
+          minimumFractionDigits={0}
+          maximumFractionDigits={2}
           style={styles.amountText}
         />
       </View>
@@ -395,7 +400,8 @@ const GravitySavings = ({
       <SuccessSheet
         visible={showSuccess}
         amount={savedAmount}
-        currencySymbol={currencySymbol}
+        currency={currency}
+        locale={locale}
         userName={userName}
         userAvatar={userAvatar}
         onDone={handleDone}
@@ -442,15 +448,6 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     letterSpacing: 0.2,
   },
-  inlineAmountRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  savingsPrefix: {
-    color: '#FFFFFF',
-    fontSize: verticalScale(15),
-    fontWeight: '400',
-  },
   savingsAmount: {
     color: '#FFFFFF',
     fontSize: verticalScale(15),
@@ -460,13 +457,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-end',
     marginTop: verticalScale(10),
-  },
-  dollarSign: {
-    color: '#FFFFFF',
-    fontSize: verticalScale(50),
-    fontWeight: '500',
-    lineHeight: verticalScale(58),
-    marginBottom: verticalScale(4),
   },
   amountText: {
     color: '#FFFFFF',

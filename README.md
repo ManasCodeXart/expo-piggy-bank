@@ -14,7 +14,7 @@ A gravity-driven savings drop — animated coins fall from your quick-amount pad
 - 🎯 **Self-measuring slot** — the piggy bank measures its own coin-slot position on layout via a UI-thread `measure()` call, so coins land correctly at any screen size without hardcoded coordinates
 - 🐖 **Imperative piggy reactions** — a `jiggle()` on every coin landing, a `proudPuff()` (spring overshoot + success haptic) once the full deposit settles
 - 🔒 **Race-safe save/animation sync** — success only shows once *both* the coin-fall animation and your `onSave` promise have resolved, whichever finishes last. A 3s grace timer catches a slow `onSave` after the animation ends, without ever double-firing `onDone` or `onError`
-- 🔢 **Custom keypad + quick-amount pills**, both driving a shared-value-backed `AnimatedCounter` that only re-renders on visible digit changes
+- 🔢 **Native rolling amounts** — the keypad, quick amounts, savings balance, and confirmation amount use [`react-native-numeric-text`](https://github.com/AmatoGiulio/react-native-numeric-text) directly
 - 🧠 **TypeScript-first** — discriminated `CoinDropState` union (`'idle' | 'dropping' | 'success' | 'error'`), fully typed props
 
 
@@ -31,10 +31,12 @@ git clone https://github.com/ManasCodeXart/expo-piggy-bank
 Copy `src/components/`, `src/constants/`, and `src/utils/`, plus `assets/images/` (`Coin.png`, `PiggyBank.png`) from the project root, into your project, then install the peer dependencies:
 
 ```bash
-npx expo install react-native-reanimated react-native-worklets expo-haptics react-native-safe-area-context
+npx expo install react-native-reanimated react-native-worklets expo-haptics react-native-safe-area-context react-native-numeric-text
 ```
 
 > Reanimated 4.x ships its worklets runtime as the separate `react-native-worklets` package — it's required alongside `react-native-reanimated`, not optional.
+
+> `react-native-numeric-text` includes native code. After installing it, create a development build with `npx expo run:ios` or `npx expo run:android`; it is not available in Expo Go.
 
 > Requires `react-native-reanimated`'s Babel plugin already configured. No `react-native-gesture-handler` needed for this component.
 
@@ -97,12 +99,12 @@ https://github.com/user-attachments/assets/db46eaea-d9a8-441d-a46a-bfe87cfc0928
 <GravitySavings>
   ├─ PiggyBank         (measures the coin slot, imperative jiggle + proud-puff)
   ├─ Coin[]            (one per save, physics-driven fall + absorb)
-  ├─ AnimatedCounter   (balance display + live keypad amount)
+  ├─ NumericText       (native currency formatting and transitions)
   ├─ Keypad            (custom numeric input, haptic per key)
   └─ SuccessSheet      (spring-in confirmation sheet)
 ```
 
-`AnimatedCounter` and `Keypad` are also exported individually — both are fully self-contained and useful outside this component. `PiggyBank`, `Coin`, and `SuccessSheet` aren't, since they depend on shared layout measurements and drop-state owned by `GravitySavings` itself.
+Currency formatting and transitions are delegated directly to `react-native-numeric-text`. `PiggyBank`, `Coin`, and `SuccessSheet` aren't exported individually, since they depend on shared layout measurements and drop-state owned by `GravitySavings` itself.
 
 ---
 
@@ -115,7 +117,8 @@ https://github.com/user-attachments/assets/db46eaea-d9a8-441d-a46a-bfe87cfc0928
 | `currentSavings` | `number` | — | Balance shown at the top. Controlled — update it yourself inside `onSave`. |
 | `userName` | `string` | — | Shown on the success sheet. |
 | `userAvatar` | `ImageSourcePropType` | — | Optional. Shown next to the balance and on the success sheet. |
-| `currencySymbol` | `string` | `'$'` | Prefix used everywhere an amount is shown. |
+| `currency` | `string` | `'USD'` | ISO 4217 currency code formatted natively by `react-native-numeric-text`. |
+| `locale` | `string` | `'en-US'` | BCP-47 locale controlling symbol placement and separators. |
 | `quickAmounts` | `readonly QuickAmountPill[]` | `$100 / $500 / $1000` | Pills above the keypad. |
 | `hapticsEnabled` | `boolean` | `true` | Enables keypad, jiggle, and success haptics. |
 | `onSave` | `(amount: number) => void \| Promise<void>` | — | **Required.** Called on Save tap. See [The Save Contract](#️-important-the-save-contract). |
