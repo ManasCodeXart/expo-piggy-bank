@@ -5,6 +5,7 @@ A gravity-driven savings drop — animated coins fall from your quick-amount pad
 
 <img width="1280" height="720" alt="km_20260710-2_1080p_30f_20260714_063804-ezgif com-video-to-gif-converter" src="https://github.com/user-attachments/assets/02ba2896-b4c5-4906-b097-24d806ec6893" />
 
+> ⚠️ **Expo development build required:** This component uses [`react-native-numeric-text`](https://github.com/AmatoGiulio/react-native-numeric-text), which contains native code and is **not compatible with Expo Go**.
 
 ---
 
